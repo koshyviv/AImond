@@ -323,8 +323,10 @@ Future<Map<String, dynamic>> getDefaultPreferences() async {
     // Web app asks to login every time on launch setting, on by default - still testing
     // because Safari blocks popups when webpage loads? so there is no point!
     // The last synced button is there though!
-    // "webForceLoginPopupOnLaunch": true,
+    "webForceLoginPopupOnLaunch": true,
     //
+
+    "openaiApiKey": "",
 
     // This key is used as a migration
     // "migratedSetLongTermLoansAmountTo0": false,

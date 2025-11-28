@@ -692,6 +692,32 @@ class MoreOptionsPagePreferences extends StatelessWidget {
       horizontalPaddingConstrained: true,
       listWidgets: [
         SettingsHeader(title: "style".tr()),
+        SettingsContainer(
+          title: "OpenAI API Key",
+          icon: Icons.key,
+          description: "Set API Key for SMS parsing",
+          onTap: () {
+            openBottomSheet(
+              context,
+              popupWithKeyboard: true,
+              PopupFramework(
+                title: "Enter OpenAI API Key",
+                child: SelectText(
+                  buttonLabel: "Save",
+                  icon: Icons.key,
+                  setSelectedText: (_) {},
+                  nextWithInput: (text) {
+                    updateSettings("openaiApiKey", text.trim(),
+                        updateGlobalState: false);
+                  },
+                  selectedText: appStateSettings["openaiApiKey"] ?? "",
+                  placeholder: "sk-...",
+                  autoFocus: true,
+                ),
+              ),
+            );
+          },
+        ),
         HeaderHeightSetting(),
         OutlinedIconsSetting(),
         FontPickerSetting(),
