@@ -12,6 +12,30 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
+const String defaultOpenAiModel = "gpt-4o-mini";
+const List<String> defaultSmsSenderKeywords = [
+  "axis",
+  "icici",
+  "hdfc",
+  "sbi",
+  "kotak",
+  "idfc",
+  "indusind",
+  "yesbank",
+  "federal",
+  "rbl",
+  "bob",
+  "citi",
+  "citibank",
+  "hsbc",
+  "amex",
+  "dbs",
+  "uco",
+  "canara",
+  "union",
+  "standard chartered",
+];
+
 // default settings, defaultSettings, initial settings
 Future<Map<String, dynamic>> getDefaultPreferences() async {
   return {
@@ -198,11 +222,7 @@ Future<Map<String, dynamic>> getDefaultPreferences() async {
     "showMethodAdded": false,
     "showBackupLimit": false,
     "outlinedIcons": false,
-    "premiumPopupAddTransactionCount": -5,
-    "premiumPopupAddTransactionLastShown": DateTime.now().toString(),
-    "premiumPopupFreeSeen": false,
     "previewDemo": false,
-    "purchaseID": null,
     "showAccountLabelTagInTransactionEntry": false,
     "showCurrencyLabel": false,
     "showTransactionsMonthlySpendingSummary": true,
@@ -327,6 +347,8 @@ Future<Map<String, dynamic>> getDefaultPreferences() async {
     //
 
     "openaiApiKey": "",
+    "openaiModel": defaultOpenAiModel,
+    "smsSenderKeywords": defaultSmsSenderKeywords,
 
     // This key is used as a migration
     // "migratedSetLongTermLoansAmountTo0": false,

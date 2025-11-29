@@ -9,7 +9,6 @@ import 'package:budget/pages/editHomePage.dart';
 import 'package:budget/pages/editObjectivesPage.dart';
 import 'package:budget/pages/homePage/homePageNetWorth.dart';
 import 'package:budget/pages/objectivesListPage.dart';
-import 'package:budget/pages/premiumPage.dart';
 import 'package:budget/pages/transactionsListPage.dart';
 import 'package:budget/pages/upcomingOverdueTransactionsPage.dart';
 import 'package:budget/struct/currencyFunctions.dart';
@@ -114,11 +113,7 @@ class MoreActionsPageState extends State<MoreActionsPage> {
           ),
         ],
         listWidgets: [
-          Padding(
-            padding: const EdgeInsetsDirectional.only(bottom: 8.0),
-            child: PremiumBanner(),
-          ),
-          MorePages()
+          MorePages(),
         ],
       );
     });
@@ -718,6 +713,8 @@ class MoreOptionsPagePreferences extends StatelessWidget {
             );
           },
         ),
+        const OpenAiModelSetting(),
+        const SmsSenderKeywordsSetting(),
         HeaderHeightSetting(),
         OutlinedIconsSetting(),
         FontPickerSetting(),
@@ -744,6 +741,165 @@ class MoreOptionsPagePreferences extends StatelessWidget {
         FirstDayOfWeekSetting(updateHomePage: true),
         NumberPadFormatSetting(),
       ],
+    );
+  }
+}
+
+class OpenAiModelSetting extends StatelessWidget {
+  const OpenAiModelSetting({super.key});
+
+  static const List<String> _suggestedModels = [
+    defaultOpenAiModel,
+    "gpt-4o",
+    "o4-mini",
+    "gpt-5-nano",
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    final String currentValue =
+        (appStateSettings["openaiModel"] ?? defaultOpenAiModel).toString();
+    return SettingsContainer(
+      title: "OpenAI Model",
+      icon: appStateSettings["outlinedIcons"]
+          ? Icons.memory_outlined
+          : Icons.memory_rounded,
+      description: currentValue,
+      onTap: () {
+        openBottomSheet(
+          context,
+          popupWithKeyboard: true,
+          PopupFramework(
+            title: "Select OpenAI Model",
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                SelectText(
+                  buttonLabel: "Save",
+                  icon: Icons.smart_toy_outlined,
+                  setSelectedText: (_) {},
+                  nextWithInput: (text) {
+                    final trimmed = text.trim();
+                    updateSettings(
+                      "openaiModel",
+                      trimmed.isEmpty ? defaultOpenAiModel : trimmed,
+                      updateGlobalState: false,
+                    );
+                  },
+                  selectedText: currentValue,
+                  placeholder: "gpt-5-nano",
+                  autoFocus: true,
+                  textCapitalization: TextCapitalization.none,
+                ),
+                const SizedBox(height: 12),
+                TextFont(
+                  text: "Quick select",
+                  fontSize: 13,
+                  fontWeight: FontWeight.bold,
+                  textAlign: TextAlign.start,
+                ),
+                const SizedBox(height: 8),
+                Wrap(
+                  spacing: 8,
+                  runSpacing: 8,
+                  children: _suggestedModels.map((model) {
+                    return ChoiceChip(
+                      label: Text(model),
+                      selected: currentValue == model,
+                      onSelected: (_) {
+                        updateSettings(
+                          "openaiModel",
+                          model,
+                          updateGlobalState: false,
+                        );
+                        popRoute(context);
+                      },
+                    );
+                  }).toList(),
+                ),
+                const SizedBox(height: 8),
+                TextFont(
+                  text:
+                      "You can paste any custom model id. Suggested values apply immediately.",
+                  fontSize: 13,
+                  textAlign: TextAlign.start,
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
+}
+
+class SmsSenderKeywordsSetting extends StatelessWidget {
+  const SmsSenderKeywordsSetting({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    final List<String> keywords =
+        ((appStateSettings["smsSenderKeywords"] as List?) ??
+                defaultSmsSenderKeywords)
+            .map((e) => e.toString())
+            .where((element) => element.trim().isNotEmpty)
+            .toList();
+    final List<String> previewSource =
+        keywords.isEmpty ? defaultSmsSenderKeywords : keywords;
+    final String preview = previewSource.take(4).join(", ");
+    final String description =
+        previewSource.length > 4 ? "$preview..." : preview;
+
+    return SettingsContainer(
+      title: "Bank Sender Keywords",
+      icon: appStateSettings["outlinedIcons"]
+          ? Icons.sms_outlined
+          : Icons.sms_rounded,
+      description: description,
+      onTap: () {
+        openBottomSheet(
+          context,
+          popupWithKeyboard: true,
+          PopupFramework(
+            title: "Allowed SMS Senders",
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                SelectText(
+                  buttonLabel: "Save",
+                  icon: Icons.sms,
+                  setSelectedText: (_) {},
+                  nextWithInput: (value) async {
+                    final entries = value
+                        .split(RegExp(r'[,\n]'))
+                        .map((item) => item.trim().toLowerCase())
+                        .where((item) => item.isNotEmpty)
+                        .toSet()
+                        .toList();
+                    await updateSettings(
+                      "smsSenderKeywords",
+                      entries.isEmpty ? defaultSmsSenderKeywords : entries,
+                      updateGlobalState: false,
+                    );
+                  },
+                  selectedText: keywords.join(", "),
+                  placeholder: defaultSmsSenderKeywords.take(4).join(", "),
+                  autoFocus: true,
+                  textCapitalization: TextCapitalization.none,
+                ),
+                const SizedBox(height: 12),
+                TextFont(
+                  text:
+                      "Separate entries with commas. Matching is case-insensitive for sender ids and SMS body.",
+                  fontSize: 13,
+                  textAlign: TextAlign.start,
+                ),
+              ],
+            ),
+          ),
+        );
+      },
     );
   }
 }

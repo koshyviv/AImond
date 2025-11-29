@@ -4,7 +4,6 @@ import 'package:budget/pages/addTransactionPage.dart';
 import 'package:budget/pages/addWalletPage.dart';
 import 'package:budget/pages/editBudgetLimitsPage.dart';
 import 'package:budget/pages/editBudgetPage.dart';
-import 'package:budget/pages/premiumPage.dart';
 import 'package:budget/pages/settingsPage.dart';
 import 'package:budget/pages/sharedBudgetSettings.dart';
 import 'package:budget/struct/currencyFunctions.dart';
@@ -361,32 +360,17 @@ class _AddBudgetPageState extends State<AddBudgetPage> {
   void initState() {
     super.initState();
     Future.delayed(Duration.zero, () async {
-      if (widget.budget == null) {
-        bool result = await premiumPopupBudgets(context);
-        if (result == true && widget.isAddedOnlyBudget != true) {
-          dynamic result = await openBottomSheet(
-            context,
-            fullSnap: false,
-            SelectBudgetTypePopup(setBudgetType: setSelectedBudgetType),
-          );
-          // if (result == "All Transactions") {
-          //   await openBottomSheet(
-          //     context,
-          //     fullSnap: false,
-          //     ViewBudgetTransactionFilterInfo(
-          //       isIncomeBudget: selectedIncome,
-          //       selectedBudgetFilters: selectedBudgetTransactionFilters,
-          //       setSelectedBudgetFilters: setSelectedBudgetFilters,
-          //       popOnDefault: true,
-          //     ),
-          //   );
-          // }
-          dynamic result2 = await openBottomSheet(
-            context,
-            fullSnap: false,
-            SelectBudgetIncomeTypePopup(setBudgetIncome: setSelectedIncome),
-          );
-        }
+      if (widget.budget == null && widget.isAddedOnlyBudget != true) {
+        await openBottomSheet(
+          context,
+          fullSnap: false,
+          SelectBudgetTypePopup(setBudgetType: setSelectedBudgetType),
+        );
+        await openBottomSheet(
+          context,
+          fullSnap: false,
+          SelectBudgetIncomeTypePopup(setBudgetIncome: setSelectedIncome),
+        );
       }
 
       allMembersOfAllBudgets = await database.getAllMembersOfBudgets();

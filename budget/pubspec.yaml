@@ -90,7 +90,6 @@ dependencies:
   quick_actions: ^1.0.7
   # feature_discovery: ^0.14.1
   gradient_borders: ^1.0.1
-  in_app_purchase: ^3.2.0
   visibility_detector: ^0.4.0+2
   confetti: ^0.7.0
   image_picker: ^1.1.2
