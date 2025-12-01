@@ -472,7 +472,7 @@
   "error-getting-products": "获取产品出错",
   "error-getting-products-description": "无法连接到应用商店，请稍后重试。",
   "error-processing-order": "处理你的购买时出错，请稍后重试。",
-  "order-confirmation": "感谢你对 Cashew 的支持！",
+  "order-confirmation": "感谢你对 AImond 的支持！",
   "any-previous-purchases-restored": "已恢复此前的购买",
   "already-purchased": "你已经购买过了",
   "current-plan": "当前方案",
@@ -984,7 +984,7 @@
   "delete-currency-question": "删除货币？",
   "custom-currency": "定制货币",
   "select-an-entry-to-set-custom-exchange-rate": "选择一个设置自定义汇率的条目。注意：所有汇率计算都使用USD作为参考。",
-  "enjoying-cashew-question": "喜欢这个应用吗？",
+  "enjoying-aimond-question": "喜欢这个应用吗？",
   "consider-rating": "如果您喜欢该应用程序，请考虑留下评论😄谢谢！",
   "no-thanks": "不，谢谢",
   "rate": "速度！",
@@ -1178,7 +1178,7 @@
   "loans-details": "贷款详情",
   "set-details": "设置详情",
   "import-warning": "进口警告",
-  "import-warning-description": "导入可能会失败！请确保您选择了有效的 Cashew [.sqlite] 或 [.sql] 备份文件",
+  "import-warning-description": "导入可能会失败！请确保您选择了有效的 AImond [.sqlite] 或 [.sql] 备份文件",
   "duplicate-budget-question": "预算重复？",
   "duplicate-budget": "重复预算"
 }

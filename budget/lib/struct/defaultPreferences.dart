@@ -13,6 +13,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
 const String defaultOpenAiModel = "gpt-4o-mini";
+const String defaultOpenAiBaseUrl = "https://api.openai.com/v1";
+const String defaultSmsPromptTemplate =
+    "You are a financial SMS parser. Extract a single transaction using the SMS text. "
+    "Heuristic hints may include amount and direction; keep the final amount signed accordingly unless the SMS clearly contradicts it. "
+    "Always respond with strictly valid minified JSON matching {\"title\": string, \"amount\": number (negative for expenses, positive for income), \"category\": string, \"date\": string ISO8601}. "
+    "Return literal null when the SMS is not a single financial transaction.";
 const List<String> defaultSmsSenderKeywords = [
   "axis",
   "icici",
@@ -348,6 +354,8 @@ Future<Map<String, dynamic>> getDefaultPreferences() async {
 
     "openaiApiKey": "",
     "openaiModel": defaultOpenAiModel,
+    "openaiBaseUrl": defaultOpenAiBaseUrl,
+    "smsPromptTemplate": defaultSmsPromptTemplate,
     "smsSenderKeywords": defaultSmsSenderKeywords,
 
     // This key is used as a migration

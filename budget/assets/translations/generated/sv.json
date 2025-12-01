@@ -472,7 +472,7 @@
   "error-getting-products": "Fel att få produkter",
   "error-getting-products-description": "Det fanns ett fel som ansluter till App Store. Vänligen försök igen senare.",
   "error-processing-order": "Det var ett felbehandling av ditt köp. Var god försök igen.",
-  "order-confirmation": "Tack för att du stöder cashew!",
+  "order-confirmation": "Tack för att du stöder aimond!",
   "any-previous-purchases-restored": "Eventuella tidigare inköp återställdes",
   "already-purchased": "Redan köpt",
   "current-plan": "Aktuell plan",
@@ -984,7 +984,7 @@
   "delete-currency-question": "Ta bort valuta?",
   "custom-currency": "Anpassad valuta",
   "select-an-entry-to-set-custom-exchange-rate": "Välj en post för att ställa in en anpassad växelkurs. Obs: Alla valutakursberäkningar använder USD som referens.",
-  "enjoying-cashew-question": "Njuter av appen?",
+  "enjoying-aimond-question": "Njuter av appen?",
   "consider-rating": "Överväg att lämna en recension om du gillar appen 😄 Tack!",
   "no-thanks": "Nej tack",
   "rate": "Betygsätta!",
@@ -1178,7 +1178,7 @@
   "loans-details": "Lånedetaljer",
   "set-details": "Ställ in detaljer",
   "import-warning": "Importvarning",
-  "import-warning-description": "Importen kan misslyckas! Se till att du har valt en giltig backupfil för Cashew [.sqlite] eller [.sql]",
+  "import-warning-description": "Importen kan misslyckas! Se till att du har valt en giltig backupfil för AImond [.sqlite] eller [.sql]",
   "duplicate-budget-question": "Duplicera budget?",
   "duplicate-budget": "Duplicera budget"
 }

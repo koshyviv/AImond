@@ -472,7 +472,7 @@
   "error-getting-products": "獲取產品出錯",
   "error-getting-products-description": "連接到App Store的錯誤。請稍後再試。",
   "error-processing-order": "購買發生錯誤。請再試一次。",
-  "order-confirmation": "感謝您支持Cashew！",
+  "order-confirmation": "感謝您支持AImond！",
   "any-previous-purchases-restored": "已恢復先前的購買",
   "already-purchased": "你已經購買過了",
   "current-plan": "目前方案",
@@ -984,7 +984,7 @@
   "delete-currency-question": "刪除貨幣？",
   "custom-currency": "定制貨幣",
   "select-an-entry-to-set-custom-exchange-rate": "選擇一個設置自定義匯率的條目。注意：所有匯率計算都使用USD作為參考。",
-  "enjoying-cashew-question": "喜歡這個應用嗎？",
+  "enjoying-aimond-question": "喜歡這個應用嗎？",
   "consider-rating": "如果您喜歡該應用程序，請考慮留下評論😄謝謝！",
   "no-thanks": "不，謝謝",
   "rate": "速度！",
@@ -1178,7 +1178,7 @@
   "loans-details": "貸款詳情",
   "set-details": "設定詳情",
   "import-warning": "進口警告",
-  "import-warning-description": "導入可能會失敗！請確保您選擇了有效的 Cashew [.sqlite] 或 [.sql] 備份文件",
+  "import-warning-description": "導入可能會失敗！請確保您選擇了有效的 AImond [.sqlite] 或 [.sql] 備份文件",
   "duplicate-budget-question": "預算重複？",
   "duplicate-budget": "重複預算"
 }

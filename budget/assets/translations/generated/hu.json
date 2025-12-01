@@ -472,7 +472,7 @@
   "error-getting-products": "Hiba a termékek beszerzésében",
   "error-getting-products-description": "Hiba történt az alkalmazásbolthoz való csatlakozáskor. Kérjük, próbálja meg később újra.",
   "error-processing-order": "Hiba történt a vásárlás feldolgozásában. Kérjük, próbálja meg újra.",
-  "order-confirmation": "Köszönjük, hogy támogatja a Cashew-t!",
+  "order-confirmation": "Köszönjük, hogy támogatja a AImond-t!",
   "any-previous-purchases-restored": "Minden korábbi vásárlás visszaállításra került",
   "already-purchased": "Már megvásárolt",
   "current-plan": "Aktuális terv",
@@ -984,7 +984,7 @@
   "delete-currency-question": "Törli ezt a valutát?",
   "custom-currency": "Egyedi pénznem",
   "select-an-entry-to-set-custom-exchange-rate": "Válasszon ki egy bejegyzést az egyéni árfolyam beállításához. Megjegyzés: Minden árfolyam-számítás az USD-t használja referenciaként.",
-  "enjoying-cashew-question": "Elégedett az alkalmazással?",
+  "enjoying-aimond-question": "Elégedett az alkalmazással?",
   "consider-rating": "Ha tetszik az alkalmazás, fontolja meg a véleményezését 😄 Köszönjük!",
   "no-thanks": "Nem, köszönöm.",
   "rate": "Értékelem!",
@@ -1178,7 +1178,7 @@
   "loans-details": "Kölcsönök részletei",
   "set-details": "Részletek beállítása",
   "import-warning": "Importálási figyelmeztetés",
-  "import-warning-description": "Az importálás sikertelen lehet! Kérjük, győződjön meg arról, hogy egy érvényes Cashew [.sqlite] vagy [.sql] biztonsági mentési fájlt választott",
+  "import-warning-description": "Az importálás sikertelen lehet! Kérjük, győződjön meg arról, hogy egy érvényes AImond [.sqlite] vagy [.sql] biztonsági mentési fájlt választott",
   "duplicate-budget-question": "Ismétlődő költségkeret?",
   "duplicate-budget": "Ismétlődő költségvetés"
 }

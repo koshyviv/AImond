@@ -472,7 +472,7 @@
   "error-getting-products": "Fehler beim Erhalten von Produkten",
   "error-getting-products-description": "Es gab einen Fehler bei der Verbindung mit dem App Store. Bitte versuche es später erneut.",
   "error-processing-order": "Es gab einen Fehler bei der Abwicklung Ihres Kaufes. Bitte versuche es erneut.",
-  "order-confirmation": "Vielen Dank, dass du Cashew unterstützt hast!",
+  "order-confirmation": "Vielen Dank, dass du AImond unterstützt hast!",
   "any-previous-purchases-restored": "Alle früheren Käufe wurden wiederhergestellt",
   "already-purchased": "Bereits gekauft",
   "current-plan": "Derzeitiger Plan",
@@ -984,7 +984,7 @@
   "delete-currency-question": "Währung löschen?",
   "custom-currency": "Benutzerdefinierte Währung",
   "select-an-entry-to-set-custom-exchange-rate": "Wähle einen Eintrag aus, um einen benutzerdefinierten Wechselkurs festzulegen. Hinweis: Alle Wechselkursberechnungen verwenden USD als Referenz.",
-  "enjoying-cashew-question": "Magst du die App?",
+  "enjoying-aimond-question": "Magst du die App?",
   "consider-rating": "Hinterlasse doch eine Bewertung, wenn dir die App gefällt 😄 Danke!",
   "no-thanks": "Nein, danke",
   "rate": "Bewerten!",
@@ -1178,7 +1178,7 @@
   "loans-details": "Kreditdetails",
   "set-details": "Details festlegen",
   "import-warning": "Import-Warnung",
-  "import-warning-description": "Der Import schlägt möglicherweise fehl! Bitte stelle sicher, dass du eine gültige Cashew-Sicherungsdatei [.sqlite] oder [.sql] ausgewählt hast",
+  "import-warning-description": "Der Import schlägt möglicherweise fehl! Bitte stelle sicher, dass du eine gültige AImond-Sicherungsdatei [.sqlite] oder [.sql] ausgewählt hast",
   "duplicate-budget-question": "Doppeltes Budget?",
   "duplicate-budget": "Doppeltes Budget"
 }

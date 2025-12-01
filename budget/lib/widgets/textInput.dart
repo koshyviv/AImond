@@ -142,6 +142,14 @@ class TextInput extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final TextInputType effectiveKeyboardType = keyboardType != null
+        ? keyboardType!
+        : numbersOnly
+            ? TextInputType.number
+            : textInputAction == TextInputAction.newline || (maxLines ?? 1) > 1
+                ? TextInputType.multiline
+                : TextInputType.text;
+
     return ResumeTextFieldFocus(
       child: Padding(
         padding: padding,
@@ -178,11 +186,7 @@ class TextInput extends StatelessWidget {
                   !appStateSettings["incognitoKeyboard"],
               scrollPadding: EdgeInsets.only(bottom: 80),
               focusNode: focusNode,
-              keyboardType: keyboardType != null
-                  ? keyboardType
-                  : numbersOnly
-                      ? TextInputType.number
-                      : TextInputType.text,
+              keyboardType: effectiveKeyboardType,
               maxLines: maxLines,
               minLines: minLines,
               onTap: onTap,

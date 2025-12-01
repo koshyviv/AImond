@@ -425,6 +425,17 @@ Future<void> processSms(
           .trim();
   final String model =
       modelSetting.isEmpty ? defaultOpenAiModel : modelSetting;
+  String baseUrlSetting =
+      _safeStringSetting(settings, "openaiBaseUrl", fallback: defaultOpenAiBaseUrl)
+          .trim();
+  if (baseUrlSetting.isEmpty) {
+    baseUrlSetting = defaultOpenAiBaseUrl;
+  }
+  final Uri chatEndpoint = _buildChatCompletionsUri(baseUrlSetting);
+  final String promptSetting =
+      _safeStringSetting(settings, "smsPromptTemplate", fallback: defaultSmsPromptTemplate);
+  final String systemPrompt =
+      promptSetting.isEmpty ? defaultSmsPromptTemplate : promptSetting;
   final List<String> senderKeywords =
       _resolveSenderKeywords(settings["smsSenderKeywords"]);
 
@@ -449,10 +460,7 @@ Future<void> processSms(
     "messages": [
       {
         "role": "system",
-        "content":
-            "You are a financial SMS parser. Extract a single transaction using the SMS text."
-                " Heuristic hints may include amount and direction; keep the final amount signed accordingly unless the SMS clearly contradicts it."
-                " Always respond with strictly valid minified JSON matching {\"title\": string, \"amount\": number (negative for expenses, positive for income), \"category\": string, \"date\": string ISO8601}. Return literal null when the SMS is not a single financial transaction."
+        "content": systemPrompt
       },
       {
         "role": "user",
@@ -465,7 +473,7 @@ Future<void> processSms(
   try {
     final response = await http
         .post(
-          Uri.parse('https://api.openai.com/v1/chat/completions'),
+          chatEndpoint,
           headers: {
             'Content-Type': 'application/json',
             'Authorization': 'Bearer $apiKey',
@@ -630,6 +638,21 @@ double? _coerceAmount(dynamic value) {
     return double.tryParse(sanitized);
   }
   return null;
+}
+
+Uri _buildChatCompletionsUri(String baseUrl) {
+  var normalized = baseUrl.trim();
+  if (normalized.isEmpty) normalized = defaultOpenAiBaseUrl;
+  if (!normalized.startsWith(RegExp(r'https?://'))) {
+    normalized = 'https://$normalized';
+  }
+  if (normalized.contains("chat/completions")) {
+    return Uri.parse(normalized);
+  }
+  if (!normalized.endsWith('/')) {
+    normalized = '$normalized/';
+  }
+  return Uri.parse('${normalized}chat/completions');
 }
 
 String _resolveWalletPk(Map<String, dynamic> settings) {

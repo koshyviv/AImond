@@ -41,6 +41,8 @@ import 'package:budget/widgets/restartApp.dart';
 import 'package:budget/widgets/selectAmount.dart';
 import 'package:budget/widgets/selectColor.dart';
 import 'package:budget/widgets/settingsContainers.dart';
+import 'package:budget/widgets/textInput.dart' as ai_text_input;
+import 'package:budget/widgets/textInput.dart' show ResumeTextFieldFocus;
 import 'package:budget/pages/walletDetailsPage.dart';
 import 'package:budget/struct/initializeBiometrics.dart';
 import 'package:budget/widgets/sliderSelector.dart';
@@ -106,7 +108,7 @@ class MoreActionsPageState extends State<MoreActionsPage> {
                       ? Icons.live_help_outlined
                       : Icons.live_help_rounded,
                   action: () {
-                    openUrl("https://cashewapp.web.app/faq.html");
+                    openUrl("https://aimondapp.web.app/faq.html");
                   },
                 ),
             ],
@@ -177,7 +179,7 @@ class MorePages extends StatelessWidget {
               //     padding: EdgeInsetsDirectional.symmetric(vertical: 5, horizontal: 4),
               //     child: SettingsContainer(
               //       onTap: () {
-              //         openUrl("https://github.com/jameskokoska/Cashew");
+              //         openUrl("https://github.com/jameskokoska/AImond");
               //       },
               //       title: "open-source".tr(),
               //       icon: MoreIcons.github,
@@ -687,34 +689,7 @@ class MoreOptionsPagePreferences extends StatelessWidget {
       horizontalPaddingConstrained: true,
       listWidgets: [
         SettingsHeader(title: "style".tr()),
-        SettingsContainer(
-          title: "OpenAI API Key",
-          icon: Icons.key,
-          description: "Set API Key for SMS parsing",
-          onTap: () {
-            openBottomSheet(
-              context,
-              popupWithKeyboard: true,
-              PopupFramework(
-                title: "Enter OpenAI API Key",
-                child: SelectText(
-                  buttonLabel: "Save",
-                  icon: Icons.key,
-                  setSelectedText: (_) {},
-                  nextWithInput: (text) {
-                    updateSettings("openaiApiKey", text.trim(),
-                        updateGlobalState: false);
-                  },
-                  selectedText: appStateSettings["openaiApiKey"] ?? "",
-                  placeholder: "sk-...",
-                  autoFocus: true,
-                ),
-              ),
-            );
-          },
-        ),
-        const OpenAiModelSetting(),
-        const SmsSenderKeywordsSetting(),
+        const ModelSettingsSection(),
         HeaderHeightSetting(),
         OutlinedIconsSetting(),
         FontPickerSetting(),
@@ -745,6 +720,201 @@ class MoreOptionsPagePreferences extends StatelessWidget {
   }
 }
 
+class ModelSettingsSection extends StatelessWidget {
+  const ModelSettingsSection({super.key});
+
+  static const Map<String, String> _providerPresets = {
+    "OpenAI": defaultOpenAiBaseUrl,
+    "OpenRouter": "https://openrouter.ai/api/v1",
+    "Grok": "https://api.x.ai/v1",
+  };
+
+  @override
+  Widget build(BuildContext context) {
+    final String apiKey = (appStateSettings["openaiApiKey"] ?? "").toString();
+    final String baseUrl =
+        (appStateSettings["openaiBaseUrl"] ?? defaultOpenAiBaseUrl).toString();
+    final String prompt = (appStateSettings["smsPromptTemplate"] ??
+            defaultSmsPromptTemplate)
+        .toString();
+    final String promptPreview =
+        prompt.trim().isEmpty ? "Using built-in template" : prompt.split('\n').first.trim();
+    final String maskedKey = apiKey.isEmpty
+        ? "Not set"
+        : "•••• ${apiKey.length <= 4 ? apiKey : apiKey.substring(apiKey.length - 4)}";
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        SettingsHeader(title: "AI Models"),
+        SettingsContainer(
+          title: "AI API Key",
+          description: maskedKey,
+          icon: Icons.key,
+          onTap: () => _openApiKeyEditor(context, apiKey),
+        ),
+        SettingsContainer(
+          title: "Provider Base URL",
+          description: baseUrl,
+          icon: Icons.public,
+          onTap: () => _openBaseUrlEditor(context, baseUrl),
+          descriptionWidget: Padding(
+            padding: const EdgeInsetsDirectional.only(top: 8.0),
+            child: Wrap(
+              spacing: 8,
+              runSpacing: 8,
+              children: _providerPresets.entries.map((entry) {
+                final bool selected = baseUrl == entry.value;
+                return ChoiceChip(
+                  label: Text(entry.key),
+                  selected: selected,
+                  onSelected: (_) {
+                    updateSettings(
+                      "openaiBaseUrl",
+                      entry.value,
+                      updateGlobalState: false,
+                    );
+                  },
+                );
+              }).toList(),
+            ),
+          ),
+        ),
+        const OpenAiModelSetting(),
+        SettingsContainer(
+          title: "SMS Prompt",
+          description: promptPreview,
+          icon: appStateSettings["outlinedIcons"]
+              ? Icons.edit_note_outlined
+              : Icons.edit_note_rounded,
+          onTap: () => _openPromptEditor(context, prompt),
+          descriptionWidget: Padding(
+            padding: const EdgeInsetsDirectional.only(top: 4.0),
+            child: TextFont(
+              text: "Applied to transaction parsing requests.",
+              fontSize: 12,
+              textColor: Theme.of(context).textTheme.bodySmall?.color,
+            ),
+          ),
+        ),
+        const SmsSenderKeywordsSetting(),
+      ],
+    );
+  }
+
+  void _openApiKeyEditor(BuildContext context, String currentKey) {
+    openBottomSheet(
+      context,
+      popupWithKeyboard: true,
+      PopupFramework(
+        title: "Enter AI API Key",
+        child: SelectText(
+          buttonLabel: "Save",
+          icon: Icons.key,
+          setSelectedText: (_) {},
+          nextWithInput: (text) {
+            updateSettings(
+              "openaiApiKey",
+              text.trim(),
+              updateGlobalState: false,
+            );
+          },
+          selectedText: currentKey,
+          placeholder: "sk-...",
+          autoFocus: true,
+        ),
+      ),
+    );
+  }
+
+  void _openBaseUrlEditor(BuildContext context, String currentUrl) {
+    openBottomSheet(
+      context,
+      popupWithKeyboard: true,
+      PopupFramework(
+        title: "Provider Base URL",
+        child: SelectText(
+          buttonLabel: "Save",
+          icon: Icons.public,
+          setSelectedText: (_) {},
+          nextWithInput: (text) {
+            final trimmed = text.trim();
+            updateSettings(
+              "openaiBaseUrl",
+              trimmed.isEmpty ? defaultOpenAiBaseUrl : trimmed,
+              updateGlobalState: false,
+            );
+          },
+          selectedText: currentUrl,
+          placeholder: defaultOpenAiBaseUrl,
+          autoFocus: true,
+        ),
+      ),
+    );
+  }
+
+  void _openPromptEditor(BuildContext context, String currentPrompt) {
+    final controller = TextEditingController(text: currentPrompt);
+    openBottomSheet(
+      context,
+      popupWithKeyboard: true,
+      PopupFramework(
+        title: "Customize SMS Prompt",
+        child: LayoutBuilder(
+          builder: (context, constraints) {
+            return SingleChildScrollView(
+              padding: const EdgeInsetsDirectional.only(bottom: 6),
+              child: ConstrainedBox(
+                constraints: BoxConstraints(minWidth: constraints.maxWidth),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    ResumeTextFieldFocus(
+                      child: ai_text_input.TextInput(
+                        labelText: "Prompt",
+                        controller: controller,
+                        minLines: 5,
+                        maxLines: 12,
+                        autoFocus: true,
+                        textInputAction: TextInputAction.newline,
+                      ),
+                    ),
+                    const SizedBox(height: 12),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.end,
+                      children: [
+                        TextButton(
+                          onPressed: () => popRoute(context),
+                          child: const Text("Cancel"),
+                        ),
+                        const SizedBox(width: 8),
+                        ElevatedButton(
+                          onPressed: () {
+                            updateSettings(
+                              "smsPromptTemplate",
+                              controller.text.trim().isEmpty
+                                  ? defaultSmsPromptTemplate
+                                  : controller.text.trim(),
+                              updateGlobalState: false,
+                            );
+                            popRoute(context);
+                          },
+                          child: const Text("Save"),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            );
+          },
+        ),
+      ),
+    );
+  }
+}
+
 class OpenAiModelSetting extends StatelessWidget {
   const OpenAiModelSetting({super.key});
 
@@ -760,7 +930,7 @@ class OpenAiModelSetting extends StatelessWidget {
     final String currentValue =
         (appStateSettings["openaiModel"] ?? defaultOpenAiModel).toString();
     return SettingsContainer(
-      title: "OpenAI Model",
+      title: "Model ID",
       icon: appStateSettings["outlinedIcons"]
           ? Icons.memory_outlined
           : Icons.memory_rounded,
@@ -770,7 +940,7 @@ class OpenAiModelSetting extends StatelessWidget {
           context,
           popupWithKeyboard: true,
           PopupFramework(
-            title: "Select OpenAI Model",
+            title: "Select Model",
             child: Column(
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.start,

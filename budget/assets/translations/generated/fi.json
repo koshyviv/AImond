@@ -472,7 +472,7 @@
   "error-getting-products": "Virhe tuotteiden saatavuudessa",
   "error-getting-products-description": "Virhe App Storeen yhdistämisessä. Yritä myöhemmin uudelleen.",
   "error-processing-order": "Virhe ostosi käsittelyssä. Yritä uudelleen.",
-  "order-confirmation": "Kiitos, että tuet Cashew'ta!",
+  "order-confirmation": "Kiitos, että tuet AImond'ta!",
   "any-previous-purchases-restored": "Kaikki aiemmat ostot palautettiin",
   "already-purchased": "Ostettu jo",
   "current-plan": "Nykyinen tilaus",
@@ -984,7 +984,7 @@
   "delete-currency-question": "Poista valuutta?",
   "custom-currency": "Mukautettu valuutta",
   "select-an-entry-to-set-custom-exchange-rate": "Valitse merkintä asettaaksesi mukautetun valuuttakurssin. HUOMAUTUS: Kaikki valuuttakurssilaskelmat käyttävät USD: tä referenssinä.",
-  "enjoying-cashew-question": "Nautitko sovelluksesta?",
+  "enjoying-aimond-question": "Nautitko sovelluksesta?",
   "consider-rating": "Harkitse arvostelun jättämistä, jos nautit sovelluksesta 😄 Kiitos!",
   "no-thanks": "Ei kiitos",
   "rate": "Arvioin!",
@@ -1178,7 +1178,7 @@
   "loans-details": "Lainojen tiedot",
   "set-details": "Aseta tiedot",
   "import-warning": "Tuo varoitus",
-  "import-warning-description": "Tuonti voi epäonnistua! Varmista, että olet valinnut kelvollisen Cashew-[.sqlite]- tai [.sql]-varmuuskopiotiedoston",
+  "import-warning-description": "Tuonti voi epäonnistua! Varmista, että olet valinnut kelvollisen AImond-[.sqlite]- tai [.sql]-varmuuskopiotiedoston",
   "duplicate-budget-question": "Päällekkäinen budjetti?",
   "duplicate-budget": "Päällekkäinen budjetti"
 }

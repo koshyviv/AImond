@@ -472,7 +472,7 @@
   "error-getting-products": "Erro ao obter produtos",
   "error-getting-products-description": "Houve um erro ao se conectar à loja de aplicativos. Por favor, tente novamente mais tarde.",
   "error-processing-order": "Houve um erro no processamento de sua compra. Por favor, tente novamente.",
-  "order-confirmation": "Obrigado por apoiar o Cashew!",
+  "order-confirmation": "Obrigado por apoiar o AImond!",
   "any-previous-purchases-restored": "Quaisquer compras anteriores foram restauradas",
   "already-purchased": "Já comprado",
   "current-plan": "Plano atual",
@@ -984,7 +984,7 @@
   "delete-currency-question": "Excluir moeda?",
   "custom-currency": "Moeda personalizada",
   "select-an-entry-to-set-custom-exchange-rate": "Selecione uma entrada para definir uma taxa de câmbio personalizada. Nota: Todos os cálculos da taxa de câmbio usam USD como referência.",
-  "enjoying-cashew-question": "Desfrutando do aplicativo?",
+  "enjoying-aimond-question": "Desfrutando do aplicativo?",
   "consider-rating": "Considere deixar uma revisão se você gosta do aplicativo 😄 Obrigado!",
   "no-thanks": "Não, obrigado",
   "rate": "Avaliar!",
@@ -1178,7 +1178,7 @@
   "loans-details": "Detalhes dos empréstimos",
   "set-details": "Definir detalhes",
   "import-warning": "Aviso de importação",
-  "import-warning-description": "A importação pode falhar! Certifique-se de ter selecionado um arquivo de backup válido do Cashew [.sqlite] ou [.sql]",
+  "import-warning-description": "A importação pode falhar! Certifique-se de ter selecionado um arquivo de backup válido do AImond [.sqlite] ou [.sql]",
   "duplicate-budget-question": "Orçamento duplicado?",
   "duplicate-budget": "Orçamento duplicado"
 }
