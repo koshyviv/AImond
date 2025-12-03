@@ -471,16 +471,50 @@ Future<void> processSms(
   };
 
   try {
-    final response = await http
-        .post(
-          chatEndpoint,
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer $apiKey',
-          },
-          body: json.encode(payload),
-        )
-        .timeout(const Duration(seconds: 30));
+    http.Response? response;
+    int retryCount = 0;
+    const maxRetries = 3;
+
+    // Retry logic for transient network errors
+    while (retryCount < maxRetries) {
+      try {
+        response = await http
+            .post(
+              chatEndpoint,
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer $apiKey',
+              },
+              body: json.encode(payload),
+            )
+            .timeout(const Duration(seconds: 30));
+
+        if (response.statusCode == 200 || response.statusCode >= 400) {
+          // Success or client error (don't retry client errors)
+          break;
+        }
+
+        // Server error or rate limit - retry
+        retryCount++;
+        if (retryCount < maxRetries) {
+          print("OpenAI API retry $retryCount/$maxRetries after ${response.statusCode}");
+          await Future.delayed(Duration(seconds: retryCount * 2));
+        }
+      } on TimeoutException {
+        retryCount++;
+        if (retryCount < maxRetries) {
+          print("OpenAI API timeout - retry $retryCount/$maxRetries");
+          await Future.delayed(Duration(seconds: retryCount * 2));
+        } else {
+          rethrow;
+        }
+      }
+    }
+
+    if (response == null) {
+      print("OpenAI API failed after $maxRetries retries");
+      return;
+    }
 
     print("OpenAI Response: ${response.statusCode}");
 
@@ -511,6 +545,17 @@ Future<void> processSms(
 
     if (extracted is! Map<String, dynamic>) {
       print("Unexpected OpenAI response format");
+      return;
+    }
+
+    // Validate required fields from OpenAI response
+    if (!extracted.containsKey("amount") && result.signedAmount == null) {
+      print("OpenAI response missing amount and no heuristic fallback");
+      return;
+    }
+
+    if (!extracted.containsKey("title") || extracted["title"].toString().trim().isEmpty) {
+      print("OpenAI response missing or empty title");
       return;
     }
 

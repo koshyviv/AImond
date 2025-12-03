@@ -40,7 +40,6 @@ android {
     }
 
     defaultConfig {
-        // TODO: Specify your own unique Application ID (https://developer.android.com/studio/build/application-id.html).
         applicationId "com.budget.tracker_app"
         minSdkVersion 23
         targetSdkVersion 34
@@ -51,9 +50,11 @@ android {
 
     lintOptions {
         disable 'InvalidPackage'
-        disable "Instantiatable"
-        checkReleaseBuilds false
+        disable 'Instantiatable'
+        checkReleaseBuilds true
         abortOnError false
+        // Treat these as warnings instead of errors
+        warning 'MissingTranslation'
     }
 
     compileOptions {
@@ -75,6 +76,9 @@ android {
     buildTypes {
         release {
             signingConfig signingConfigs.release
+            minifyEnabled true
+            shrinkResources true
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
 }
